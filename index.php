@@ -4,12 +4,12 @@ $servername = "mysql:host=localhost;dbname=netland";
 $username = "root";
 $password = "";
 $pdo = new PDO($servername, $username, $password);
-if(isset($_POST["logout"])){
-    setcookie("loggedInUser", "", time()-2*24*60*60);
+if (isset($_POST["logout"])) {
+    setcookie("loggedInUser", "", time() - 2 * 24 * 60 * 60);
     header("location: index.php");
 }
-if($_COOKIE["loggedInUser"] != "Admin"){
-    header ("location: login.php");
+if ($_COOKIE["loggedInUser"] != "Admin") {
+    header("location: login.php");
 }
 ?>
 
@@ -98,7 +98,7 @@ $movieDuration .= $rememberSort;
     <form method="post">
         <button name="logout"> logout</button>
     </form>
-    <?php 
+    <?php
 
 
     ?>
@@ -106,7 +106,7 @@ $movieDuration .= $rememberSort;
             <tr>
             <form action="index.php" method="get">
                 <th>
-                    <?php 
+                    <?php
                         echo ("<a href='$movieTitel'>Titel</a>");
                     ?>
                 </th>
@@ -124,7 +124,7 @@ $movieDuration .= $rememberSort;
                 if ($_GET["movieTitel"] == "titel") {
                     $stmt = $pdo->query('SELECT titel, duur, id FROM netland.inhoud ORDER BY titel WHERE soort="movies"');
                     while ($info = $stmt->fetch()) {
-                        echo("<tr><td>".$info['titel']."</td><td>".$info['duur']."</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
+                        echo("<tr><td>" . $info['titel'] . "</td><td>" . $info['duur'] . "</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
                     }
                 }
             }
@@ -132,32 +132,31 @@ $movieDuration .= $rememberSort;
                 if ($_GET["movieDuration"] == "duration") {
                     $stmt = $pdo->query('SELECT titel, duur, id FROM netland.inhoud ORDER BY duur WHERE soort="movies"');
                     while ($info = $stmt->fetch()) {
-                        echo("<tr><td>".$info['titel']."</td><td>".$info['duur']."</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
+                        echo("<tr><td>" . $info['titel'] . "</td><td>" . $info['duur'] . "</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
                     }
-                }
-                else {
+                } else {
                     $stmt = $pdo->query('SELECT titel, duur, id FROM netland.inhoud WHERE soort="movies"');
                     while ($info = $stmt->fetch()) {
-                        echo("<tr><td>".$info['titel']."</td><td>".$info['duur']."</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
+                        echo("<tr><td>" . $info['titel'] . "</td><td>" . $info['duur'] . "</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
                     }
-                }  
+                }
             }
             if ($stmt == "") {
                 $stmt = $pdo->query('SELECT titel, duur, id FROM netland.inhoud WHERE soort="movies"');
                 while ($info = $stmt->fetch()) {
-                    echo("<tr><td>".$info['titel']."</td><td>".$info['duur']."</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
+                    echo("<tr><td>" . $info['titel'] . "</td><td>" . $info['duur'] . "</td><td><a name='id' type='submit' href='http://localhost/films.php?id=$info[id]'>Details</a></td></tr>");
                 }
-            } 
+            }
             ?>
         </form>
     </table>
     <form method=post>
             <?php
-            if (isset($_POST['makeFilm'])){
+            if (isset($_POST['makeFilm'])) {
                 $createFilm = $pdo->query('INSERT INTO netland.inhoud (titel, duur, taal, landVanAfkomst, omschrijving, trailer, soort) VALUES ("0", 0, "0", "0", "0", "0,", "movies")');
-                $createFilm->fetch();  
+                $createFilm->fetch();
                 header("refresh:0");
-            } 
+            }
             ?>
         <button name="makeFilm">Record maken voor film</button>
         </form>
@@ -166,12 +165,12 @@ $movieDuration .= $rememberSort;
         <form action="index.php" method="get">
             <tr>
                 <th>
-                <?php 
+                <?php
                 echo("<a href='$serieTitel'>Titel</a>");
                 ?>
                 </th>
             <th>
-                <?php 
+                <?php
                 echo("<a href='$serieRating'>Rating</a>");
                 ?>
             </th>
@@ -185,25 +184,24 @@ $movieDuration .= $rememberSort;
                 if ($_GET["serieTitle"] == "title") {
                     $stmt1 = $pdo->query('SELECT title, rating, id FROM netland.inhoud ORDER BY title WHERE soort="series"');
                     while ($info = $stmt1->fetch()) {
-                        echo("<tr><td>".$info['title']."</td><td>".$info['rating']."</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
+                        echo("<tr><td>" . $info['title'] . "</td><td>" . $info['rating'] . "</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
                     }
-                }  
+                }
             }
             if (isset($_GET["serieRating"])) {
                 if ($_GET["serieRating"] == "rating") {
                     $stmt1 = $pdo->query('SELECT title, rating, id FROM netland.inhoud ORDER BY rating WHERE soort="series"');
                     while ($info = $stmt1->fetch()) {
-                        echo("<tr><td>".$info['title']."</td><td>".$info['rating']."</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
+                        echo("<tr><td>" . $info['title'] . "</td><td>" . $info['rating'] . "</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
                     }
                 }
-                      
             }
             if ($stmt1 == "") {
                 $stmt1 = $pdo->query('SELECT titel, rating, id FROM netland.inhoud WHERE soort="series"');
                 while ($info = $stmt1->fetch()) {
-                    echo("<tr><td>".$info['titel']."</td><td>".$info['rating']."</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
+                    echo("<tr><td>" . $info['titel'] . "</td><td>" . $info['rating'] . "</td><td><a name='id' type='submit' href='http://localhost/series.php?id=$info[id]'>Details</a></td></tr>");
                 }
-            }   
+            }
             ?>
         </form>
 
@@ -211,9 +209,9 @@ $movieDuration .= $rememberSort;
     </table>
     <form method=post>
             <?php
-            if (isset($_POST['makeSerie'])){
+            if (isset($_POST['makeSerie'])) {
                 $createSerie = $pdo->query('INSERT INTO inhoud (titel, rating, omschrijving, awards, seizoenen, landVanAfkomst, taal, soort) VALUES ("0", 0, "0", 0, 0, "0,", "0", "series")');
-                $createSerie->fetch();  
+                $createSerie->fetch();
                 header("refresh:0");
             }
             ?>

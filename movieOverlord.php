@@ -4,8 +4,8 @@ $servername = "mysql:host=localhost;dbname=netland";
 $username = "root";
 $password = "";
 $pdo = new PDO($servername, $username, $password);
-if($_COOKIE["loggedInUser"] != "Admin"){
-    header ("location: login.php");
+if ($_COOKIE["loggedInUser"] != "Admin") {
+    header("location: login.php");
 }
 ?>
 
@@ -114,7 +114,7 @@ textarea {
     $stmt = $pdo->prepare("SELECT titel, rating, omschrijving, duur, landVanAfkomst, taal, trailer, id FROM netland.inhoud WHERE id=? AND soort='movies'");
     $stmt->execute([intval($_GET["id"])]);
     $info = $stmt->fetch(PDO::FETCH_ASSOC);
-?>
+    ?>
     <a href="http://localhost/films.php<?php echo "?id=$info[id]" ?>">Vorige pagina</a>
     <div class="hHoofd">
         <form method="post" class="hoofd">
@@ -128,12 +128,14 @@ textarea {
         </form>
     </div>
 <?php
-    if(isset($_POST["name"]) || isset($_POST["duur"]) || isset($_POST["beschrijving"]) || isset($_POST["landVanAfkomst"]) 
-    || isset($_POST["trailer"]) || isset($_POST["uitkomstDatum"])){
-        $updateMovies = $pdo->prepare("UPDATE inhoud SET titel=?, omschrijving=?, landVanAfkomst=?, duur=?, trailer=?, taal=? WHERE id=? AND soort='movies'");
-        $updateMovies->execute([$_POST["name"], $_POST["beschrijving"], $_POST["landVanAfkomst"], $_POST["duur"], $_POST["trailer"], $_POST["taal"],  $_GET["id"]]); 
-        header("Refresh:0");
-    }
+if (
+    isset($_POST["name"]) || isset($_POST["duur"]) || isset($_POST["beschrijving"]) || isset($_POST["landVanAfkomst"])
+        || isset($_POST["trailer"]) || isset($_POST["uitkomstDatum"])
+) {
+    $updateMovies = $pdo->prepare("UPDATE inhoud SET titel=?, omschrijving=?, landVanAfkomst=?, duur=?, trailer=?, taal=? WHERE id=? AND soort='movies'");
+    $updateMovies->execute([$_POST["name"], $_POST["beschrijving"], $_POST["landVanAfkomst"], $_POST["duur"], $_POST["trailer"], $_POST["taal"],  $_GET["id"]]);
+    header("Refresh:0");
+}
 ?>
 
 </body>
