@@ -4,6 +4,10 @@ $servername = "mysql:host=localhost;dbname=netland";
 $username = "root";
 $password = "";
 $pdo = new PDO($servername, $username, $password);
+if(isset($_POST["logout"])){
+    setcookie("loggedInUser", "", time()-2*24*60*60);
+    header("location: index.php");
+}
 if($_COOKIE["loggedInUser"] != "Admin"){
     header ("location: login.php");
 }
@@ -89,7 +93,15 @@ $movieDuration .= $rememberSort;
 
 <body>
     <h1>Welkom om het netland beheerderspaneel</h1>
+
     <table>
+    <form method="post">
+        <button name="logout"> logout</button>
+    </form>
+    <?php 
+
+
+    ?>
         <h2>Films</h2>
             <tr>
             <form action="index.php" method="get">
