@@ -94,10 +94,6 @@ $movieDuration .= $rememberSort;
     <form method="post" action=logout.php>
         <button name="logout">logout</button>
     </form>
-    <?php
-
-
-    ?>
         <h2>Films</h2>
             <tr>
             <form action="index.php" method="get">
